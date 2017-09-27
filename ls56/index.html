@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Geo location</title>
+
+    </head>
+    <body>
+       <img id=map src=''>
+        <script>
+            navigator.geolocation.getCurrentPosition(function(pos) {
+                console.log(pos);
+                const long = pos.coords.longitude;
+                const lat = pos.coords.latitude;
+
+                document.getElementById('map').src = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${long}&zoom=13&scale=1&size=300x300&maptype=roadmap&format=png&visual_refresh=true&markers=color:red%7Clabel:S%7C${lat},${long}`;
+            });
+        </script>
+    </body>
+</html>

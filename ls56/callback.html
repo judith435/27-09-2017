@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Callback</title>
+                <script src="jquery-3.2.1.js"></script>
+        <style>
+        .error {
+            border: 1px solid rgb(255,0,0)
+        }
+        .success {
+             border: 1px solid rgb(0,255,0)
+            }
+        </style>
+    </head>
+    <body>
+        <input id='my-input' class='is-number a b' data-range-min='3' data-range-max='9' data-min-length='1' data-max-length='5'>
+          <input id='my-input2' class='is-number a b' data-range-min='3' data-range-max='9' data-min-length='1' data-max-length='5'>
+        
+        
+        <div id='answer'></div>
+        <button id=b>Click me</button>
+        
+        <script>
+            // Validations
+            function isNumberValidation(str) {
+                return !Number.isNaN(Number.parseInt(str));
+            }
+            
+            function isInRangeValidation(str, min, max) {
+                
+            }
+            
+            function lengthValidation(str, min, max) {
+                return str.length > min && str.length < max;
+            }
+        
+            function h(elementId, valArray) {
+                const inp = document.getElementById(elementId);
+                inp.addEventListener('blur', function() {
+                    for(let i=0; i < valArray.length; i++) {
+                        if (valArray[i].val == 'is-number') {
+                            if (isNumberValidation(inp.value)) {
+                                $(inp).removeClass('error').addClass('success');
+                            } else {
+                                $(inp).removeClass('success').addClass('error');
+                                return;
+                            }
+                        }
+                        else if (valArray[i].val == 'length') {
+                            if (lengthValidation(inp.value, valArray[i].min, valArray[i].max )) {
+                               $(inp).removeClass('error').addClass('success');
+                            } else {
+                                $(inp).removeClass('success').addClass('error');
+                                return;
+                            }
+     
+                        }
+                    }
+                    
+                });
+            }
+            
+            h('my-input', [
+                {val: 'is-number'},
+                //{val: 'range', max: 9, min: 1},
+                {val: 'length', max: 9, min: 1}
+            ]);
+            
+             h('my-input2', [
+                {val: 'is-number'},
+                //{val: 'range', max: 9, min: 1},
+                {val: 'length', max: 9, min: 1}
+            ]);
+
+            
+            
+        </script>
+        
+        <script>
+            const answer = document.getElementById('answer');
+            const b = document.getElementById('b');
+            const myInput = document.getElementById('my-input');
+            
+            function sayHi(rand) {
+                answer.innerHTML = 'success ' + rand;
+            }
+            
+            b.addEventListener('click', function() {
+                
+                
+              
+                
+                
+                whatToSay(sayHi, function(rand) {
+                    answer.innerHTML = ('error ' + rand );
+                })
+            });
+            
+            function whatToSay(success, error) {
+                setTimeout(function() {
+                    
+                    const rand = Math.floor(Math.random() * 10);
+                    console.log(rand);
+                    if (rand % 2 == 0) {
+                        success(rand);
+                    }
+                    else {
+                        error(rand);
+                    }
+                }, 1 * 1000);
+            }
+        </script>
+    </body>
+</html>
